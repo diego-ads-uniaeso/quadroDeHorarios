@@ -1,25 +1,24 @@
 package br.edu.uniaeso.quadrodehorarios.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_disciplina;
+    @Column(name = "id_disciplina")
+    private Long idDisciplina;
 
-    @Column(unique = true, nullable = false)
-    private String cod_disciplina;
+    @Column(unique = true, nullable = false, name = "cod_disciplina")
+    private String codDisciplina;
 
     @Column(unique = true, nullable = false)
     private String nome;
-
-
 
 }
