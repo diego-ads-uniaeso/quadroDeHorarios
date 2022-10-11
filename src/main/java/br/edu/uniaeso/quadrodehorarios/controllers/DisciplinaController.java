@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/quadrodehorarios/disciplina")
-public class CDisciplina {
+public class DisciplinaController {
 
     @Autowired
     private DisciplinaService service;
