@@ -23,7 +23,7 @@ public class Professor {
     private String matricula;
 
     @ManyToMany
-    @JoinColumn(name = "id_disciplina")
+    @JoinColumn(name = "id_disciplinas")
     private List<Disciplina> disciplinas;
 
     private Boolean horario[][];
