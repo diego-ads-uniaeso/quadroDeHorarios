@@ -1,7 +1,6 @@
 package br.edu.uniaeso.quadrodehorarios.entities;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
