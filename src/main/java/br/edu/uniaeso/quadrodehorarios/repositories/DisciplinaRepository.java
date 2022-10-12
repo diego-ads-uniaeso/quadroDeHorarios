@@ -18,4 +18,6 @@ public interface DisciplinaRepository {
 
     public Disciplina findByCodDisciplina(String codDisciplina);
 
+    public Disciplina findByNome(String nome);
+
 }

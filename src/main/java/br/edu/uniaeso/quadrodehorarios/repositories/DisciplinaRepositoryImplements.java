@@ -11,4 +11,10 @@ public class DisciplinaRepositoryImplements extends AbstractRepository<Disciplin
         return getEntityManager().createQuery("select d from Disciplina d where d.codDisciplina = '" + codDisciplina
                 + "'", Disciplina.class).getSingleResult();
     }
+
+    @Override
+    public Disciplina findByNome(String nome) {
+        return getEntityManager().createQuery("select d from Disciplina d where d.nome = '" + nome
+                + "'", Disciplina.class).getSingleResult();
+    }
 }
