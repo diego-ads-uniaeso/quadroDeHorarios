@@ -4,6 +4,8 @@ import br.edu.uniaeso.quadrodehorarios.entities.Disciplina;
 import br.edu.uniaeso.quadrodehorarios.services.DisciplinaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,14 +13,14 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/quadrodehorarios/disciplina")
-public class CDisciplina {
+public class DisciplinaController {
 
     @Autowired
     private DisciplinaService service;
 
     @PostMapping("/save")
-    public Disciplina save(@RequestBody Disciplina disciplina) {
-        return service.save(disciplina);
+    public ResponseEntity<Disciplina> save(@RequestBody Disciplina disciplina) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(disciplina));
     }
 
     @PutMapping("/update")
@@ -31,7 +33,7 @@ public class CDisciplina {
         service.delete(id);
     }
 
-    @GetMapping("/find/{codDisciplina}")
+    @GetMapping("/find/byCodDisciplina/{codDisciplina}")
     public Disciplina findByCodDisciplina(@PathVariable(value = "codDisciplina") String codDisciplina) {
         return service.findByCodDisciplina(codDisciplina);
     }
