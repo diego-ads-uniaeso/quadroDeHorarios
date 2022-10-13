@@ -2,19 +2,22 @@ package br.edu.uniaeso.quadrodehorarios.entities;
 
 import lombok.*;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Disciplina {
+public class Disciplina implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_disciplina")
-    private Long idDisciplina;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID idDisciplina;
 
-    @Column(unique = true, nullable = false, name = "cod_disciplina")
+    @Column(unique = true, nullable = false)
     private String codDisciplina;
 
     @Column(unique = true, nullable = false)

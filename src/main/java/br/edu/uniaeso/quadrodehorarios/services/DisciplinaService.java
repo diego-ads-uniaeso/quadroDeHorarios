@@ -8,7 +8,7 @@ public interface DisciplinaService {
 
     Disciplina save(Disciplina disciplina);
 
-    void update(Disciplina disciplina);
+    Disciplina update(Disciplina disciplina);
 
     void delete(Long id);
 
