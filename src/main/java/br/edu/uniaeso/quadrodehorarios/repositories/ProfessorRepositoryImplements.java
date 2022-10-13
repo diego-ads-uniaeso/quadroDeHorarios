@@ -2,7 +2,9 @@ package br.edu.uniaeso.quadrodehorarios.repositories;
 
 import br.edu.uniaeso.quadrodehorarios.entities.Disciplina;
 import br.edu.uniaeso.quadrodehorarios.entities.Professor;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProfessorRepositoryImplements extends AbstractRepository<Professor,Long> implements ProfessorRepository{
 
     @Override
