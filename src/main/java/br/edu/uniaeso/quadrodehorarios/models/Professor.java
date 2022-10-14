@@ -1,4 +1,4 @@
-package br.edu.uniaeso.quadrodehorarios.entities;
+package br.edu.uniaeso.quadrodehorarios.models;
 
 import lombok.*;
 
@@ -26,8 +26,8 @@ public class Professor implements Serializable {
     private String matricula;
 
     @ManyToMany
-    @JoinColumn(name = "id_disciplina")
     private List<Disciplina> disciplinas;
 
-    private Boolean horario[][];
+    @ManyToMany
+    private List<Disponibilidade> disponibilidades;
 }

@@ -1,4 +1,4 @@
-package br.edu.uniaeso.quadrodehorarios.entities;
+package br.edu.uniaeso.quadrodehorarios.models;
 
 import lombok.*;
 import javax.persistence.*;
