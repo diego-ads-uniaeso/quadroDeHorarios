@@ -1,6 +1,6 @@
 package br.edu.uniaeso.quadrodehorarios.repositories;
 
-import br.edu.uniaeso.quadrodehorarios.entities.Professor;
+import br.edu.uniaeso.quadrodehorarios.models.Professor;
 import org.springframework.stereotype.Repository;
 
 @Repository

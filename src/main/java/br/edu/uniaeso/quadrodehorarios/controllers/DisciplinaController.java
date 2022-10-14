@@ -1,9 +1,8 @@
 package br.edu.uniaeso.quadrodehorarios.controllers;
 
-import br.edu.uniaeso.quadrodehorarios.entities.Disciplina;
+import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
 import br.edu.uniaeso.quadrodehorarios.services.DisciplinaService;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

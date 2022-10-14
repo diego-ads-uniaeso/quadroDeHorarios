@@ -1,6 +1,6 @@
 package br.edu.uniaeso.quadrodehorarios.services;
 
-import br.edu.uniaeso.quadrodehorarios.entities.Disciplina;
+import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
 
 import java.util.List;
 
