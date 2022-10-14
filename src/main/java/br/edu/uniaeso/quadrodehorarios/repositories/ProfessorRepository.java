@@ -7,7 +7,7 @@ import java.util.List;
 public interface ProfessorRepository {
     Professor save(Professor professor);
 
-    void update(Professor professor);
+    Professor update(Professor professor);
 
     void delete(Long id);
 
