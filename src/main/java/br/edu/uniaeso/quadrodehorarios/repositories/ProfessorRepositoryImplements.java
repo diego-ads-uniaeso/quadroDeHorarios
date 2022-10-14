@@ -1,6 +1,5 @@
 package br.edu.uniaeso.quadrodehorarios.repositories;
 
-import br.edu.uniaeso.quadrodehorarios.entities.Disciplina;
 import br.edu.uniaeso.quadrodehorarios.entities.Professor;
 
 public class ProfessorRepositoryImplements extends AbstractRepository<Professor,Long> implements ProfessorRepository{
