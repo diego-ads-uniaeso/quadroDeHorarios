@@ -8,7 +8,7 @@ public interface ProfessorService {
 
     Professor save(Professor professor);
 
-    void update(Professor professor);
+    Professor update(Professor professor);
 
     void delete(Long id);
 

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import br.edu.uniaeso.quadrodehorarios.entities.Professor;
 import br.edu.uniaeso.quadrodehorarios.services.ProfessorService;
 
 @RestController
