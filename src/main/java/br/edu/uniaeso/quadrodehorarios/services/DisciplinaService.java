@@ -17,4 +17,6 @@ public interface DisciplinaService {
     List<Disciplina> findAll();
 
     Disciplina findByCodDisciplina(String codDisciplina);
+
+    Disciplina findByNome(String nome);
 }
