@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
+
 import br.edu.uniaeso.quadrodehorarios.services.ProfessorService;
 
 @RestController
@@ -30,14 +32,14 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID id) {
         service.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Professor deletado com sucesso!");
     }
 
     @GetMapping("/find/byId/{idProfessor}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "idProfessor") Long codProfessor) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findById(codProfessor));
+    public ResponseEntity<Object> findById(@PathVariable(value = "idProfessor") UUID idProfessor) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findById(idProfessor));
     }
 
     @GetMapping("/find/byMatricula/{matricula}")

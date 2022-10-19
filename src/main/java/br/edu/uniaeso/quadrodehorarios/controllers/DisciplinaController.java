@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -23,34 +24,79 @@ public class DisciplinaController {
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Disciplina disciplina) {
         Map<HttpStatus, String> message = new HashMap<>();
-        if(service.findByCodDisciplina(disciplina.getCodDisciplina()) != null) {
-            message.put(HttpStatus.CONFLICT, "Código da disciplina já existente!");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        Disciplina base = service.findByCodDisciplina(disciplina.getCodDisciplina());
+        if (base != null) {
+            if (base.getCodDisciplina().equals(disciplina.getCodDisciplina())) {
+                message.put(HttpStatus.CONFLICT, "Código da disciplina já existente!");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+            }
+            if (base.getNome().equals(disciplina.getNome())) {
+                message.put(HttpStatus.CONFLICT, "Nome da disciplina já existente!");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+            }
         }
-        if(service.findByNome(disciplina.getNome()) != null) {
-            message.put(HttpStatus.CONFLICT, "Nome da disciplina já existente!");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
-        }
-        if(service.save(disciplina) != null) {
-            message.put(HttpStatus.CREATED, "Disciplina cadastrada com sucesso!");
-        }
+        service.save(disciplina);
+        message.put(HttpStatus.CREATED, "Disciplina cadastrada com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Object> update(@RequestBody Disciplina disciplina) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(disciplina));
+        Map<HttpStatus, String> message = new HashMap<>();
+        Disciplina base = service.findById(disciplina.getIdDisciplina());
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (base.getCodDisciplina().equals(disciplina.getIdDisciplina()) && base.getNome().equals(disciplina.getNome())) {
+            message.put(HttpStatus.CONFLICT, "Não houve altaração porque os valores são os mesmos!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        message.put(HttpStatus.ACCEPTED, "Disciplina alterada com sucesso!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID id) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        Disciplina base = service.findById(id);
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
         service.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Disciplina deletada com sucesso!");
+        message.put(HttpStatus.ACCEPTED, "Disciplina deletada com sucesso!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
     }
 
     @GetMapping("/find/byCodDisciplina/{codDisciplina}")
     public ResponseEntity<Object> findByCodDisciplina(@PathVariable(value = "codDisciplina") String codDisciplina) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findByCodDisciplina(codDisciplina));
+        Map<HttpStatus, String> message = new HashMap<>();
+        if (codDisciplina.isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Deve informar o código da disciplina para realizar a pesquisa!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        Disciplina base = service.findByCodDisciplina(codDisciplina);
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
+
+    @GetMapping("/find/nome/{nome}")
+    public ResponseEntity<Object> findByNome(@PathVariable(value = "nome") String nome) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        if (nome.isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Deve informar o nome da disciplina para realizar a pesquisa!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        Disciplina base = service.findByNome(nome);
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
     @GetMapping("/find/all")

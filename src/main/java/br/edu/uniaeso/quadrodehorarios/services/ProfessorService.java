@@ -3,6 +3,7 @@ package br.edu.uniaeso.quadrodehorarios.services;
 import br.edu.uniaeso.quadrodehorarios.models.Professor;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ProfessorService {
 
@@ -10,9 +11,9 @@ public interface ProfessorService {
 
     Professor update(Professor professor);
 
-    void delete(Long id);
+    void delete(UUID id);
 
-    Professor findById(Long id);
+    Professor findById(UUID id);
 
     List<Professor> findAll();
 

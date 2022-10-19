@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -31,12 +33,12 @@ public class DisciplinaServiceImplements implements DisciplinaService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         repository.delete(id);
     }
 
     @Override
-    public Disciplina findById(Long id) {
+    public Disciplina findById(UUID id) {
         return repository.findById(id);
     }
 

@@ -3,6 +3,7 @@ package br.edu.uniaeso.quadrodehorarios.repositories;
 import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DisciplinaRepository {
 
@@ -10,9 +11,9 @@ public interface DisciplinaRepository {
 
     Disciplina update(Disciplina disciplina);
 
-    void delete(Long id);
+    void delete(UUID id);
 
-    Disciplina findById(Long id);
+    Disciplina findById(UUID id);
 
     List<Disciplina> findAll();
 

@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public abstract class AbstractRepository<T, PK extends Serializable> {
@@ -32,12 +33,12 @@ public abstract class AbstractRepository<T, PK extends Serializable> {
 		return entity;
 	}
 
-	public void delete(PK id) {
+	public void delete(UUID id) {
 
 		entityManager.remove(entityManager.getReference(entityClass, id));
 	}
 
-	public T findById(PK id) {
+	public T findById(UUID id) {
 
 		return entityManager.find(entityClass, id);
 	}
