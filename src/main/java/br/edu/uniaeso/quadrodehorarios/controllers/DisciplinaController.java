@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @AllArgsConstructor
@@ -24,12 +21,16 @@ public class DisciplinaController {
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Disciplina disciplina) {
         Map<HttpStatus, String> message = new HashMap<>();
-        Disciplina base = service.findByCodDisciplina(disciplina.getCodDisciplina());
-        if (base != null) {
+        Disciplina base = null;
+        base = service.findByCodDisciplina(disciplina.getCodDisciplina());
+        if(base != null) {
             if (base.getCodDisciplina().equals(disciplina.getCodDisciplina())) {
                 message.put(HttpStatus.CONFLICT, "Código da disciplina já existente!");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
+        }
+        base = service.findByNome(disciplina.getNome());
+        if(base != null) {
             if (base.getNome().equals(disciplina.getNome())) {
                 message.put(HttpStatus.CONFLICT, "Nome da disciplina já existente!");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
