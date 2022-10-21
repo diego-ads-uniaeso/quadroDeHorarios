@@ -18,4 +18,6 @@ public interface ProfessorService {
     List<Professor> findAll();
 
     Professor findByMatricula(String matricula);
+
+    Professor findByNome(String nome);
 }

@@ -50,4 +50,9 @@ public class ProfessorServiceImplements implements ProfessorService {
     public Professor findByMatricula(String matricula) {
         return repository.findByMatricula(matricula);
     }
+
+    @Override
+    public Professor findByNome(String nome) {
+        return repository.findByNome(nome);
+    }
 }
