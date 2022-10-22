@@ -34,17 +34,14 @@ public abstract class AbstractRepository<T, PK extends Serializable> {
 	}
 
 	public void delete(UUID id) {
-
 		entityManager.remove(entityManager.getReference(entityClass, id));
 	}
 
 	public T findById(UUID id) {
-
 		return entityManager.find(entityClass, id);
 	}
 
 	public List<T> findAll() {
-
 		return entityManager.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
 	}
 

@@ -49,10 +49,11 @@ public class DisciplinaController {
             message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
-        if (base.getCodDisciplina().equals(disciplina.getIdDisciplina()) && base.getNome().equals(disciplina.getNome())) {
+        if (base.getCodDisciplina().equals(disciplina.getCodDisciplina()) && base.getNome().equals(disciplina.getNome())) {
             message.put(HttpStatus.CONFLICT, "Não houve altaração porque os valores são os mesmos!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
+        service.update(disciplina);
         message.put(HttpStatus.ACCEPTED, "Disciplina alterada com sucesso!");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
     }
@@ -68,6 +69,17 @@ public class DisciplinaController {
         service.delete(id);
         message.put(HttpStatus.ACCEPTED, "Disciplina deletada com sucesso!");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") UUID id) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        Disciplina base = service.findById(id);
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
     @GetMapping("/find/byCodDisciplina/{codDisciplina}")
