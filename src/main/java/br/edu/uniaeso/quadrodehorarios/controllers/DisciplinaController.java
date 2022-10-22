@@ -1,7 +1,9 @@
 package br.edu.uniaeso.quadrodehorarios.controllers;
 
 import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
+import br.edu.uniaeso.quadrodehorarios.models.Professor;
 import br.edu.uniaeso.quadrodehorarios.services.DisciplinaService;
+import br.edu.uniaeso.quadrodehorarios.services.ProfessorService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,9 @@ public class DisciplinaController {
 
     @Autowired
     private DisciplinaService service;
+
+    @Autowired
+    private ProfessorService serviceProfessor;
 
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Disciplina disciplina) {
@@ -59,14 +64,19 @@ public class DisciplinaController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID id) {
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID idDisciplina) {
         Map<HttpStatus, String> message = new HashMap<>();
-        Disciplina base = service.findById(id);
+        Disciplina base = service.findById(idDisciplina);
+        Professor professor = serviceProfessor.findByDisciplina(idDisciplina);
+        if(professor != null) {
+            message.put(HttpStatus.CONFLICT, "Disciplina já associada a um professor, não pode ser excluída!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
         if (base == null) {
             message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
-        service.delete(id);
+        service.delete(idDisciplina);
         message.put(HttpStatus.ACCEPTED, "Disciplina deletada com sucesso!");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
     }

@@ -9,6 +9,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "disciplinas")
 public class Disciplina implements Serializable {
 
     private static final long serialVersionUID = 1L;

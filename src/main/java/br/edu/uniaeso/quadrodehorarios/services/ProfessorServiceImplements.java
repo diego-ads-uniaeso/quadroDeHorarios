@@ -1,5 +1,6 @@
 package br.edu.uniaeso.quadrodehorarios.services;
 
+import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
 import br.edu.uniaeso.quadrodehorarios.models.Professor;
 import br.edu.uniaeso.quadrodehorarios.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class ProfessorServiceImplements implements ProfessorService {
     @Override
     public Professor findByMatricula(String matricula) {
         return repository.findByMatricula(matricula);
+    }
+
+    @Override
+    public Professor findByDisciplina(UUID idDisciplina) {
+        return repository.findByDisciplina(idDisciplina);
     }
 }

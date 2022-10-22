@@ -1,5 +1,6 @@
 package br.edu.uniaeso.quadrodehorarios.services;
 
+import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
 import br.edu.uniaeso.quadrodehorarios.models.Professor;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ProfessorService {
     List<Professor> findAll();
 
     Professor findByMatricula(String matricula);
+
+    public Professor findByDisciplina(UUID idDisciplina);
 }

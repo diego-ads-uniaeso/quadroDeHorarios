@@ -11,6 +11,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "professores")
 public class Professor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,8 +27,10 @@ public class Professor implements Serializable {
     private String matricula;
 
     @ManyToMany
+    @JoinTable(name = "professor_disciplina",
+            joinColumns = @JoinColumn(name = "id_professor"),
+            inverseJoinColumns = @JoinColumn(name = "id_disciplina"))
     private List<Disciplina> disciplinas;
 
-    @ManyToMany
-    private List<Disponibilidade> disponibilidades;
+    private Boolean[][] disponibilidade;
 }
