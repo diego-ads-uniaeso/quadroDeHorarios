@@ -30,6 +30,7 @@ public class Professor implements Serializable {
     @JoinTable(name = "professor_disciplina",
             joinColumns = @JoinColumn(name = "id_professor"),
             inverseJoinColumns = @JoinColumn(name = "id_disciplina"))
+
     private List<Disciplina> disciplinas;
 
     private Boolean[][] disponibilidade;
