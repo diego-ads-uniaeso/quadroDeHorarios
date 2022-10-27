@@ -1,17 +1,16 @@
 package br.edu.uniaeso.quadrodehorarios.controllers;
 
 import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
+import br.edu.uniaeso.quadrodehorarios.models.Professor;
 import br.edu.uniaeso.quadrodehorarios.services.DisciplinaService;
+import br.edu.uniaeso.quadrodehorarios.services.ProfessorService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @AllArgsConstructor
@@ -21,15 +20,22 @@ public class DisciplinaController {
     @Autowired
     private DisciplinaService service;
 
+    @Autowired
+    private ProfessorService serviceProfessor;
+
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Disciplina disciplina) {
         Map<HttpStatus, String> message = new HashMap<>();
-        Disciplina base = service.findByCodDisciplina(disciplina.getCodDisciplina());
-        if (base != null) {
+        Disciplina base = null;
+        base = service.findByCodDisciplina(disciplina.getCodDisciplina());
+        if(base != null) {
             if (base.getCodDisciplina().equals(disciplina.getCodDisciplina())) {
                 message.put(HttpStatus.CONFLICT, "Código da disciplina já existente!");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
+        }
+        base = service.findByNome(disciplina.getNome());
+        if(base != null) {
             if (base.getNome().equals(disciplina.getNome())) {
                 message.put(HttpStatus.CONFLICT, "Nome da disciplina já existente!");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
@@ -48,25 +54,42 @@ public class DisciplinaController {
             message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
-        if (base.getCodDisciplina().equals(disciplina.getIdDisciplina()) && base.getNome().equals(disciplina.getNome())) {
+        if (base.getCodDisciplina().equals(disciplina.getCodDisciplina()) && base.getNome().equals(disciplina.getNome())) {
             message.put(HttpStatus.CONFLICT, "Não houve altaração porque os valores são os mesmos!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
+        service.update(disciplina);
         message.put(HttpStatus.ACCEPTED, "Disciplina alterada com sucesso!");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID id) {
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID idDisciplina) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        Disciplina base = service.findById(idDisciplina);
+        Professor professor = serviceProfessor.findByDisciplina(idDisciplina);
+        if(professor != null) {
+            message.put(HttpStatus.CONFLICT, "Disciplina já associada a um professor, não pode ser excluída!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        service.delete(idDisciplina);
+        message.put(HttpStatus.ACCEPTED, "Disciplina deletada com sucesso!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") UUID id) {
         Map<HttpStatus, String> message = new HashMap<>();
         Disciplina base = service.findById(id);
         if (base == null) {
             message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
-        service.delete(id);
-        message.put(HttpStatus.ACCEPTED, "Disciplina deletada com sucesso!");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+        return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
     @GetMapping("/find/byCodDisciplina/{codDisciplina}")

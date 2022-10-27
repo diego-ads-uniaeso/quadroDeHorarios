@@ -29,7 +29,7 @@ public class DisciplinaServiceImplements implements DisciplinaService {
 
     @Override
     public Disciplina update(Disciplina disciplina) {
-        return repository.save(disciplina);
+        return repository.update(disciplina);
     }
 
     @Override
