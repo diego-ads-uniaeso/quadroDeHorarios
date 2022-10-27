@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import br.edu.uniaeso.quadrodehorarios.services.ProfessorService;
@@ -23,7 +25,10 @@ public class ProfessorController {
 
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Professor professor) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(professor));
+        Map<HttpStatus, String> message = new HashMap<>();
+        service.save(professor);
+        message.put(HttpStatus.CREATED, "Professor cadastrado com sucesso!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/update")
