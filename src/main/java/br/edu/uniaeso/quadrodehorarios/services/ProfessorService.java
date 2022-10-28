@@ -21,4 +21,6 @@ public interface ProfessorService {
     Professor findByMatricula(String matricula);
 
     public Professor findByDisciplina(UUID idDisciplina);
+
+    String generateMatricula();
 }

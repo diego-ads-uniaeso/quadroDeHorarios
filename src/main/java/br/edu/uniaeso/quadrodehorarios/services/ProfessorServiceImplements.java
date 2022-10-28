@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -55,5 +54,20 @@ public class ProfessorServiceImplements implements ProfessorService {
     @Override
     public Professor findByDisciplina(UUID idDisciplina) {
         return repository.findByDisciplina(idDisciplina);
+    }
+
+    @Override
+    public String generateMatricula() {
+        Calendar cal = GregorianCalendar.getInstance();
+        String matricula = String.valueOf(cal.get(Calendar.YEAR));
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            matricula += String.valueOf(random.nextInt(10));
+        }
+        Professor prof = repository.findByMatricula(matricula);
+        if (prof != null) {
+            generateMatricula();
+        }
+        return matricula;
     }
 }
