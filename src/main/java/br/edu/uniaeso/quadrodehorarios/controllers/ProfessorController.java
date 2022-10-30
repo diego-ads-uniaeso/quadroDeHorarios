@@ -1,6 +1,7 @@
 package br.edu.uniaeso.quadrodehorarios.controllers;
 
 
+import br.edu.uniaeso.quadrodehorarios.models.Disciplina;
 import br.edu.uniaeso.quadrodehorarios.models.Professor;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
