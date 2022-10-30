@@ -27,6 +27,15 @@ public class ProfessorController {
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Professor professor) {
         Map<HttpStatus, String> message = new HashMap<>();
+        Professor base = null;
+        base = service.findById(professor.getIdProfessor());
+        if(base != null){
+            if(base.getIdProfessor().equals(professor.getIdProfessor())){
+                message.put(HttpStatus.CONFLICT, "Código do professor já existente!");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+            }
+        }
+
         service.save(professor);
         message.put(HttpStatus.CREATED, "Professor cadastrado com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
