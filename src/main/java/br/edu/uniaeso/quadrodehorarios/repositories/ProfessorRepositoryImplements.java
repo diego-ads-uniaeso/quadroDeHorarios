@@ -12,8 +12,12 @@ public class ProfessorRepositoryImplements extends AbstractRepository<Professor,
 
     @Override
     public Professor findByMatricula(String matricula) {
-        return getEntityManager().createQuery("select d from Professor d where d.matricula = '" + matricula
-                + "'", Professor.class).getSingleResult();
+        try {
+            return getEntityManager().createQuery("select d from Professor d where d.matricula = '" + matricula
+                    + "'", Professor.class).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

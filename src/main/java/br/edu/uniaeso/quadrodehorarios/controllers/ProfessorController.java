@@ -27,6 +27,7 @@ public class ProfessorController {
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Professor professor) {
         Map<HttpStatus, String> message = new HashMap<>();
+        professor.setMatricula(service.generateMatricula());
         service.save(professor);
         message.put(HttpStatus.CREATED, "Professor cadastrado com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
