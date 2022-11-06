@@ -20,15 +20,15 @@ public class Contato implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idContatos;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String nome;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String conteudo;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private Boolean reclamacao;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private Boolean elogio;
 }
