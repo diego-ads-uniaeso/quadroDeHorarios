@@ -43,13 +43,8 @@ public class DisciplinaServiceImplements implements DisciplinaService {
     }
 
     @Override
-    public Disciplina findByCodDisciplina(String codDisciplina) {
-        return repository.findByCodDisciplina(codDisciplina);
-    }
-
-    @Override
-    public Disciplina findByNome(String nome) {
-        return repository.findByNome(nome);
+    public Disciplina findByCodDisciplinaOrNome(String codDisciplina, String nome) {
+        return repository.findByCodDisciplinaOrNome(codDisciplina, nome);
     }
 
     @Override

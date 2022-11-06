@@ -27,15 +27,12 @@ public class DisciplinaController {
     public ResponseEntity<Object> save(@RequestBody Disciplina disciplina) {
         Map<HttpStatus, String> message = new HashMap<>();
         Disciplina base = null;
-        base = service.findByCodDisciplina(disciplina.getCodDisciplina());
+        base = service.findByCodDisciplinaOrNome(disciplina.getCodDisciplina(), disciplina.getNome());
         if(base != null) {
             if (base.getCodDisciplina().equals(disciplina.getCodDisciplina())) {
                 message.put(HttpStatus.CONFLICT, "Código da disciplina já existente!");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
-        }
-        base = service.findByNome(disciplina.getNome());
-        if(base != null) {
             if (base.getNome().equals(disciplina.getNome())) {
                 message.put(HttpStatus.CONFLICT, "Nome da disciplina já existente!");
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
@@ -99,7 +96,7 @@ public class DisciplinaController {
             message.put(HttpStatus.CONFLICT, "Deve informar o código da disciplina para realizar a pesquisa!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
-        Disciplina base = service.findByCodDisciplina(codDisciplina);
+        Disciplina base = null;
         if (base == null) {
             message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
@@ -114,7 +111,7 @@ public class DisciplinaController {
             message.put(HttpStatus.CONFLICT, "Deve informar o nome da disciplina para realizar a pesquisa!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
-        Disciplina base = service.findByNome(nome);
+        Disciplina base = null;
         if (base == null) {
             message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
