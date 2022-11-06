@@ -90,41 +90,6 @@ public class ProfessorController {
         return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
-    @GetMapping("/find/byMatricula/{matricula}")
-    public ResponseEntity<Object> findByMatricula(@PathVariable(value = "matricula") String matricula) {
-        Map<HttpStatus, String> message = new HashMap<>();
-        Professor base = null;
-
-        base = service.findByMatricula(matricula);
-        if (matricula.isEmpty()) {
-            message.put(HttpStatus.CONFLICT, "Deve informar a matricula para realizar a pesquisa!");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
-        }
-        if (base == null) {
-            message.put(HttpStatus.NOT_FOUND, "Professor não encontrado!");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(base);
-    }
-
-    @GetMapping("/find/byNome/{nome}")
-    public ResponseEntity<Object> findByNome(@PathVariable(value = "nome")String nome){
-        Map<HttpStatus, String> message = new HashMap<>();
-        Professor base = null;
-
-        base = service.findByNome(nome);
-        if (nome.isEmpty()) {
-            message.put(HttpStatus.CONFLICT, "Deve informar o nome para realizar a pesquisa!");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
-        }
-        if (base == null) {
-            message.put(HttpStatus.NOT_FOUND, "Professor não encontrado!");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(base);
-
-    }
-
     @GetMapping("/find/all")
     public ResponseEntity<List<Professor>> listAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());

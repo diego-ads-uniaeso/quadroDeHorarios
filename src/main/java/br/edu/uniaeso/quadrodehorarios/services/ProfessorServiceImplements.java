@@ -52,11 +52,6 @@ public class ProfessorServiceImplements implements ProfessorService {
     }
 
     @Override
-    public Professor findByNome(String nome) {return repository.findByNome(nome);
-
-    }
-
-    @Override
     public Professor findByDisciplina(UUID idDisciplina) {
         return repository.findByDisciplina(idDisciplina);
     }

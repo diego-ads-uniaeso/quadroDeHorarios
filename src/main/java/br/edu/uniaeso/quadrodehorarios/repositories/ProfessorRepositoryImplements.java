@@ -21,12 +21,6 @@ public class ProfessorRepositoryImplements extends AbstractRepository<Professor,
     }
 
     @Override
-    public Professor findByNome(String nome) {
-        return getEntityManager().createQuery("select d from Professor d where d.nome = '" + nome
-                + "'", Professor.class).getSingleResult();
-    }
-
-    @Override
     public Professor findByDisciplina(UUID idDisciplina) {
         try{
             return getEntityManager().createQuery("select p from Professor p inner join p.disciplinas d where d.idDisciplina = '"

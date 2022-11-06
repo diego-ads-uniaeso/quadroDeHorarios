@@ -19,7 +19,6 @@ public interface ProfessorRepository {
 
     public Professor findByMatricula(String matricula);
 
-    public Professor findByNome(String nome);
 
     public Professor findByDisciplina(UUID idDisciplina);
 }
