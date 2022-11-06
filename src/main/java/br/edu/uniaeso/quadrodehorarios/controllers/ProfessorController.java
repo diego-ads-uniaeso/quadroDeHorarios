@@ -24,9 +24,19 @@ public class ProfessorController {
     @Autowired
     private ProfessorService service;
 
+
     @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestBody Professor professor) {
         Map<HttpStatus, String> message = new HashMap<>();
+        Professor base = null;
+        base = service.findByMatricula(professor.getMatricula());
+        if(base != null){
+            if(base.getMatricula().equals(professor.getMatricula())){
+                message.put(HttpStatus.CONFLICT, "Professor já cadastrado!");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+            }
+        }
+        professor.setMatricula(service.generateMatricula());
         service.save(professor);
         message.put(HttpStatus.CREATED, "Professor cadastrado com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
@@ -34,23 +44,85 @@ public class ProfessorController {
 
     @PutMapping("/update")
     public ResponseEntity<Object> update(@RequestBody Professor professor) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(professor));
+        Map<HttpStatus, String> message = new HashMap<>();
+        Professor base = null;
+
+        base = service.findByMatricula(professor.getMatricula());
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Professor não cadastrado!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        if (base.getIdProfessor().equals(professor.getIdProfessor()) && base.getNome().equals(professor.getNome())) {
+            message.put(HttpStatus.CONFLICT, "Não houve altaração porque os valores são os mesmos!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+
+        service.update(professor);
+        message.put(HttpStatus.ACCEPTED, "Professor alterado com sucesso!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID id) {
-        service.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Professor deletado com sucesso!");
-    }
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") UUID idProfessor) {
+        Map<HttpStatus, String> message = new HashMap<>();
+        Professor base = null;
+
+        base = service.findById(idProfessor);
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Professor não encontrado!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        service.delete(idProfessor);
+        message.put(HttpStatus.ACCEPTED, "Professor deletado com sucesso!");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+     }
 
     @GetMapping("/find/byId/{idProfessor}")
     public ResponseEntity<Object> findById(@PathVariable(value = "idProfessor") UUID idProfessor) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findById(idProfessor));
+        Map<HttpStatus, String> message = new HashMap<>();
+        Professor base = null;
+
+        base = service.findById(idProfessor);
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Professor não encontrado!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
     }
 
     @GetMapping("/find/byMatricula/{matricula}")
     public ResponseEntity<Object> findByMatricula(@PathVariable(value = "matricula") String matricula) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findByMatricula(matricula));
+        Map<HttpStatus, String> message = new HashMap<>();
+        Professor base = null;
+
+        base = service.findByMatricula(matricula);
+        if (matricula.isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Deve informar a matricula para realizar a pesquisa!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Professor não encontrado!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+    }
+
+    @GetMapping("/find/byNome/{nome}")
+    public ResponseEntity<Object> findByNome(@PathVariable(value = "nome")String nome){
+        Map<HttpStatus, String> message = new HashMap<>();
+        Professor base = null;
+
+        base = service.findByNome(nome);
+        if (nome.isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Deve informar o nome para realizar a pesquisa!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        if (base == null) {
+            message.put(HttpStatus.NOT_FOUND, "Professor não encontrado!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(base);
+
     }
 
     @GetMapping("/find/all")
