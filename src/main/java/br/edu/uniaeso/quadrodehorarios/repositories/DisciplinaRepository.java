@@ -17,8 +17,6 @@ public interface DisciplinaRepository {
 
     List<Disciplina> findAll();
 
-    Disciplina findByCodDisciplina(String codDisciplina);
-
-    Disciplina findByNome(String nome);
+    Disciplina findByCodDisciplinaOrNome(String codDisciplina, String nome);
 
 }

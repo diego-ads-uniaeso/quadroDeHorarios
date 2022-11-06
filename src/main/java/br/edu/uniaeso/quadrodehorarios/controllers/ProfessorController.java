@@ -36,7 +36,7 @@ public class ProfessorController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
         }
-
+        professor.setMatricula(service.generateMatricula());
         service.save(professor);
         message.put(HttpStatus.CREATED, "Professor cadastrado com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
