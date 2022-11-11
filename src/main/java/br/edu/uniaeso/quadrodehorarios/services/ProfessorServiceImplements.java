@@ -28,7 +28,7 @@ public class ProfessorServiceImplements implements ProfessorService {
 
     @Override
     public Professor update(Professor professor) {
-        return repository.save(professor);
+        return repository.update(professor);
     }
 
     @Override

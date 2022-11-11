@@ -47,14 +47,10 @@ public class ProfessorController {
         Map<HttpStatus, String> message = new HashMap<>();
         Professor base = null;
 
-        base = service.findByMatricula(professor.getMatricula());
+        base = service.findById(professor.getIdProfessor());
         if (base == null) {
             message.put(HttpStatus.NOT_FOUND, "Professor não cadastrado!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        }
-        if (base.getIdProfessor().equals(professor.getIdProfessor()) && base.getNome().equals(professor.getNome())) {
-            message.put(HttpStatus.CONFLICT, "Não houve altaração porque os valores são os mesmos!");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
 
         service.update(professor);
