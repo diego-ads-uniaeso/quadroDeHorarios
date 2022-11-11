@@ -38,6 +38,14 @@ public class DisciplinaController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
         }
+        if(disciplina.getCodDisciplina().isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Favor preencher o código da disciplina!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        if(disciplina.getNome().isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Favor preencher o nome da disciplina!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
         service.save(disciplina);
         message.put(HttpStatus.CREATED, "Disciplina cadastrada com sucesso!");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
@@ -51,8 +59,12 @@ public class DisciplinaController {
             message.put(HttpStatus.NOT_FOUND, "Disciplina não encontrada!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
-        if (base.getCodDisciplina().equals(disciplina.getCodDisciplina()) && base.getNome().equals(disciplina.getNome())) {
-            message.put(HttpStatus.CONFLICT, "Não houve altaração porque os valores são os mesmos!");
+        if(disciplina.getCodDisciplina().isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Favor preencher o código da disciplina!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        if(disciplina.getNome().isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Favor preencher o nome da disciplina!");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
         service.update(disciplina);
