@@ -36,6 +36,12 @@ public class ProfessorController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
             }
         }
+
+        if(professor.getNome().isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Favor preencher o nome do professor!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+
         professor.setMatricula(service.generateMatricula());
         service.save(professor);
         message.put(HttpStatus.CREATED, "Professor cadastrado com sucesso!");
@@ -49,8 +55,13 @@ public class ProfessorController {
 
         base = service.findById(professor.getIdProfessor());
         if (base == null) {
-            message.put(HttpStatus.NOT_FOUND, "Professor não cadastrado!");
+            message.put(HttpStatus.NOT_FOUND, "Professor não encontrado!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+
+        if(professor.getNome().isEmpty()) {
+            message.put(HttpStatus.CONFLICT, "Favor preencher o nome do professor!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
 
         service.update(professor);
