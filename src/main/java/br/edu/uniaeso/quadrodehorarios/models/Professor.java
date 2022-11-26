@@ -33,5 +33,5 @@ public class Professor implements Serializable {
 
     private List<Disciplina> disciplinas;
 
-    //private Boolean[][] disponibilidade;
+    private Boolean[][] disponibilidade;
 }
